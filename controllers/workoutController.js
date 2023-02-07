@@ -4,9 +4,10 @@ const mongoose = require('mongoose')
 // get all workouts
 const getWorkouts = async (req, res) => {
   const workouts = await Workout.find({}).sort({ createdAt: -1 })
-
   res.status(200).json(workouts)
 }
+
+
 
 // get a single workout
 const getWorkout = async (req, res) => {
@@ -75,7 +76,7 @@ const updateWorkout = async (req, res) => {
   const { id } = req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: 'No such workout' })
+    return res.status(400).json({ error: 'Can not update: No such workout' })
   }
 
   const workout = await Workout.findOneAndUpdate({ _id: id }, {
@@ -83,7 +84,7 @@ const updateWorkout = async (req, res) => {
   })
 
   if (!workout) {
-    return res.status(400).json({ error: 'No such workout' })
+    return res.status(400).json({ error: 'Can not update: No such workout' })
   }
 
   res.status(200).json(workout)
